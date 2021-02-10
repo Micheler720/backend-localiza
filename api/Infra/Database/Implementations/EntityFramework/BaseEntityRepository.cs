@@ -23,7 +23,7 @@ namespace Infra.Database.Implementations.EntityFramework.Repositories
 
         public void Delete(T entity)
         {
-            throw new NotImplementedException();
+            _context.Remove(entity);
         }
 
         public IEnumerable<T> Filter(Expression<Func<T, bool>> where, params Expression<Func<T, object>>[] expressions)
@@ -38,7 +38,8 @@ namespace Infra.Database.Implementations.EntityFramework.Repositories
 
         public void Update(T entity)
         {
-            throw new NotImplementedException();
+            _context.Set<T>().Add(entity);
+            _context.SaveChanges();
         }
     }
 }

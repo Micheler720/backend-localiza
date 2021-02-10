@@ -19,6 +19,8 @@ namespace Entities
         public string CPF { get; set; }      
         
         public DateTime Birthay { get; set; }
+
+        [MaxLength(150)]
         public string Registration { get; set; }
 
         [Required]        
