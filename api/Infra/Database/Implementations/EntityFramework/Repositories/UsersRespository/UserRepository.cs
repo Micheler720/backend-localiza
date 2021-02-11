@@ -1,7 +1,7 @@
 using System.Linq;
+using Domains.Repositories;
 using Entities;
 using Infra.Database.Implementations.EntityFramework.Repositories;
-using Infra.Database.Repositories.Interfaces;
 
 namespace Infra.Database.Implementations.EntityFramework.Repositories.UsersRespository
 {

@@ -4,7 +4,7 @@ namespace Entities.Interfaces
 {
     public interface IPerson
     {
-        string CPF { get; set; }
+        string Cpf { get; set; }
         DateTime Birthay { get; set; }
     }
 }

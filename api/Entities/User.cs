@@ -16,7 +16,7 @@ namespace Entities
         public string Name { get; set; }
         
         [MaxLength(11)]
-        public string CPF { get; set; }      
+        public string Cpf { get; set; }      
         
         public DateTime Birthay { get; set; }
 
