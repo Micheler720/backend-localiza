@@ -10,6 +10,7 @@ using Infra.Database.Implementations.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Infra.Database.Implementations.EntityFramework.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace api.Controllers
 {
@@ -36,6 +37,7 @@ namespace api.Controllers
 
         [HttpPost]
         [Route("/users")]
+        [AllowAnonymous]
         public async Task<IActionResult> Create([FromBody] User user)
         {
             try

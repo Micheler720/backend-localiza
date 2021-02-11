@@ -26,7 +26,8 @@ namespace Domains.UseCase.UserServices
 
                 if(userExist.Count > 0) throw new UniqUserRegisterCpf("User already registered");
 
-                await this._repository.Add(user);            
+                await this._repository.Add(user); 
+                return;         
 
             }
             else
@@ -41,11 +42,6 @@ namespace Domains.UseCase.UserServices
 
                 await this._repository.Add(user);
             }
-
-
-
         }
-    }
-
-    
+    }  
 }
