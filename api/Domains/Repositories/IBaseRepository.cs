@@ -10,7 +10,8 @@ namespace Domains.Repositories
         Task Add(T entity);
         Task Update(T entity);
         Task Delete(T entity);
-        IEnumerable<T> GetAll(params Expression<Func<T, object>>[] expressions);
+        Task<List<T>> GetAll(params Expression<Func<T, object>>[] expressions);
+        Task<List<T>> GetAll();
         Task<List<T>> Filter(
             Expression<Func<T, bool>> where,
             params Expression<Func<T, object>>[] expressions

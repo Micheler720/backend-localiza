@@ -39,14 +39,20 @@ namespace Infra.Database.Implementations.EntityFramework.Repositories
             return await query.ToListAsync();
         }
 
-        public IEnumerable<T> GetAll(params Expression<Func<T, object>>[] expressions)
+        public async Task<List<T>> GetAll(params Expression<Func<T, object>>[] expressions)
         {
             var query = _context.Set<T>().AsQueryable();
             foreach (var expression in expressions)
             {
                 query = query.Include(expression);
             }
-            return query.ToList();
+            return await query.ToListAsync();
+        }
+
+         public async Task<List<T>> GetAll()
+        {
+            var query = _context.Set<T>().AsQueryable();
+            return await query.ToListAsync();
         }
 
         public async Task Update(T entity)

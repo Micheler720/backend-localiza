@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Infra.Database.Implementations.EntityFramework.Repositories;
 using Microsoft.AspNetCore.Authorization;
+using ViewModel;
 
 namespace api.Controllers
 {
@@ -21,18 +22,22 @@ namespace api.Controllers
         private readonly ILogger<UserController> _logger;
         private readonly IBaseRepository<User> _context;
         private readonly UserSave _userSave;
+        private readonly UserList _userList;
 
         public UserController(ILogger<UserController> logger, ContextEntity context)
         {
             _logger = logger;
             this._context = new BaseEntityRepository<User>(context);
             this._userSave = new UserSave(_context);
+            this._userList = new UserList(_context);
         }
 
         [HttpGet]
-        public IEnumerable<User> Get()
+        [Route("/users")]
+        [AllowAnonymous]
+        public async Task<List<UserView>> Get ()
         {
-            throw new NotImplementedException();
+            return await this._userList.Execute();
         }
 
         [HttpPost]
@@ -42,7 +47,6 @@ namespace api.Controllers
         {
             try
             {
-
                 await _userSave.Execute(user);
                 return StatusCode(201);
             }

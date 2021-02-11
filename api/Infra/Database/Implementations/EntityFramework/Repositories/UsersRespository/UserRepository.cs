@@ -1,11 +1,10 @@
 using System.Linq;
 using Domains.Repositories;
-using Entities;
-using Infra.Database.Implementations.EntityFramework.Repositories;
+using Entities.Interfaces;
 
 namespace Infra.Database.Implementations.EntityFramework.Repositories.UsersRespository
 {
-    public class UserRepository :  BaseEntityRepository<User>, IUserRepository<User>
+    public class UserRepository :  BaseEntityRepository<IUser>, IUserRepository<IUser>
     {
         public UserRepository(ContextEntity context) : base(context)
         {

@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Domains.Repositories;
 using Domains.UseCase.UserServices.Exceptions;
 using Entities;
+using Entities.Interfaces;
+using Entities.Roles;
 
 namespace Domains.UseCase.UserServices
 {
@@ -16,12 +18,24 @@ namespace Domains.UseCase.UserServices
         }
         public async Task Execute(User user)
         {
+            if(user.Cpf != null  && user.Registration != null) throw new UserNotDefinid(
+                "Usuário não foi definido, foram enviadas informações de CPF e matricula."
+                );
 
+
+            if(user.Cpf != null ) 
+            {
+                user.UserRole = UserRole.Person;
+            }
+            else
+            {
+                user.UserRole = UserRole.Operator;                
+            }
+            
             if(user.Id == 0)
             {
                 var userExist = await _repository.Filter(
-                    userRepository => userRepository.Cpf  == user.Cpf || 
-                                    user.Registration == userRepository.Registration
+                    userRepository => user.Registration == userRepository.Registration
                 );
 
                 if(userExist.Count > 0) throw new UniqUserRegisterCpf("User already registered");
@@ -33,8 +47,7 @@ namespace Domains.UseCase.UserServices
             else
             {
                 var userExist = await _repository.Filter(
-                    userRepository => userRepository.Cpf  == user.Cpf || 
-                                    user.Registration == userRepository.Registration
+                    userRepository => user.Registration == userRepository.Registration
                                     && user.Id != userRepository.Id
                 );
 
@@ -43,5 +56,6 @@ namespace Domains.UseCase.UserServices
                 await this._repository.Add(user);
             }
         }
+       
     }  
 }

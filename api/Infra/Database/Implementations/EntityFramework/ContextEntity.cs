@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Entities.Interfaces;
 using Entities;
 
 namespace Infra.Database.Implementations.EntityFramework
