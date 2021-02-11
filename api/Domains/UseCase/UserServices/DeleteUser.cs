@@ -16,7 +16,8 @@ namespace Domains.UseCase.UserServices
 
         public async Task Execute(User user)
         {
-            var userRepository = this._repository.Filter( userRepository => userRepository.Id == user.Id );
+            if(user.id == null) throw new UserNotFound("Usuário não cadastrado.");
+            var userRepository =  await this._repository.Filter( userRepository => userRepository.Id == user.Id );
             if(userRepository == null ) throw new UserNotFound("Usuário não cadastrado.");
             await this._repository.Delete(user);
         }
