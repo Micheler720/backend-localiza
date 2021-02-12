@@ -8,11 +8,11 @@ using ViewModel;
 
 namespace Domains.UseCase.UserServices
 {
-    public class UserList
+    public class UserListService
     {
         private IBaseRepository<User> _repository;
         
-        public UserList(IBaseRepository<User> repository)
+        public UserListService(IBaseRepository<User> repository)
         {
             this._repository = repository;
         }

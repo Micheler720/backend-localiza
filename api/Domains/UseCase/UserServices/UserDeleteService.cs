@@ -5,17 +5,18 @@ using Entities;
 
 namespace Domains.UseCase.UserServices
 {
-    public class DeleteUser
+    public class UserDeleteService
     {
-        private IBaseRepository<User> _repository;
+        private IUserRepository<User> _repository;
         
-        public DeleteUser(IBaseRepository<User> repository)
+        public UserDeleteService(IUserRepository<User> repository)
         {
             this._repository = repository;
         }
 
-        public async Task Execute(User user)
+        public async Task Execute(int id)
         {
+            var user = await this._repository.FindById(id);
             if (user.Id == 0) throw new UserNotFound("Usuário não cadastrado.");
             var userRepository =  await this._repository.Filter( userRepository => userRepository.Id == user.Id );
             if(userRepository == null ) throw new UserNotFound("Usuário não cadastrado.");

@@ -11,5 +11,8 @@ namespace Domains.Repositories
     {
         Task<User> FindByOperatorRegisterNot(User user);
         Task<User> FindByPersonRegisterNot(User user);
+        Task<User> FindById(int id);
+        Task<User> FindByCpfAndPassword(string cpf, string password);
+        Task<User> FindByRegistrationAndPassword(string registration, string password);
     }
 }

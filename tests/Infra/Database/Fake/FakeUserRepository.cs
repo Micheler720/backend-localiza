@@ -23,5 +23,13 @@ namespace Infra.Database.Fake
                         .FirstOrDefault();
                         
         }
+
+        public async Task<User> FindById(int id)
+        {
+            await Task.Delay(2000);
+            return this._data
+                        .Where(data => data.Id == id )
+                        .FirstOrDefault();
+        }
     }
 }

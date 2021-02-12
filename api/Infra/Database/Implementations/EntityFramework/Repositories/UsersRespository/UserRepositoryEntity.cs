@@ -17,6 +17,9 @@ namespace Infra.Database.Implementations.EntityFramework.Repositories.UsersRespo
             this._context = context;
 
         }
+
+        
+
         public async Task<User> FindByOperatorRegisterNot( User user)
         {
              var query = from u in _context.Users
@@ -31,6 +34,32 @@ namespace Infra.Database.Implementations.EntityFramework.Repositories.UsersRespo
              var query = from u in _context.Users
                 where u.Cpf ==  user.Cpf
                 && user.Id != u.Id
+                select u;
+            return await query.FirstOrDefaultAsync<User>() as User;
+        }
+
+        public async Task<User> FindById(int id)
+        {
+             var query = from u in _context.Users
+                where  id != u.Id
+                select u;
+            return await query.FirstOrDefaultAsync<User>() as User;
+        }
+
+        public async Task<User> FindByCpfAndPassword(string cpf, string password)
+        {
+            var query = from u in _context.Users
+                where  cpf == u.Cpf
+                && password == u.Password
+                select u;
+            return await query.FirstOrDefaultAsync<User>() as User;
+        }
+
+        public async Task<User> FindByRegistrationAndPassword(string registration, string password)
+        {
+            var query = from u in _context.Users
+                where  registration == u.Registration
+                && password == u.Password
                 select u;
             return await query.FirstOrDefaultAsync<User>() as User;
         }

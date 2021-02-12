@@ -9,11 +9,11 @@ using Entities.Roles;
 
 namespace Domains.UseCase.UserServices
 {
-    public class UserSave
+    public class UserSaveService
     {
         private IUserRepository<User> _repository;
         
-        public UserSave(IUserRepository<User> repository)
+        public UserSaveService(IUserRepository<User> repository)
         {
             this._repository = repository;
         }
