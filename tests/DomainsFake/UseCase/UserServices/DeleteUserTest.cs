@@ -10,14 +10,14 @@ namespace DomainsFake.UseCase.UserServices
 {
     public class DeleteUserTest
     {
-        private UserDelete _service;
+        private UserDeleteService _service;
         private FakeBaseRepository<User> _repository;
 
         [SetUp]
         public void Setup()
         {
             this._repository = new FakeBaseRepository<User>();
-            this._service = new UserDelete(_repository);
+            this._service = new UserDeleteService(_repository);
 
         }
         [Test]

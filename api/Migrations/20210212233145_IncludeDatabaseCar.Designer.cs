@@ -4,14 +4,16 @@ using Infra.Database.Implementations.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace api.Migrations
 {
     [DbContext(typeof(ContextEntity))]
-    partial class ContextEntityModelSnapshot : ModelSnapshot
+    [Migration("20210212233145_IncludeDatabaseCar")]
+    partial class IncludeDatabaseCar
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,15 +34,6 @@ namespace api.Migrations
                     b.Property<int>("IdBrand")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdCategory")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdFuel")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdModel")
-                        .HasColumnType("int");
-
                     b.Property<int>("LuggageCapacity")
                         .HasColumnType("int");
 
@@ -55,12 +48,6 @@ namespace api.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IdBrand");
-
-                    b.HasIndex("IdCategory");
-
-                    b.HasIndex("IdFuel");
-
-                    b.HasIndex("IdModel");
 
                     b.ToTable("cars");
                 });
@@ -177,49 +164,10 @@ namespace api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entities.CarCategory", "Category")
-                        .WithMany("Cars")
-                        .HasForeignKey("IdCategory")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entities.CarFuel", "Fuel")
-                        .WithMany("Cars")
-                        .HasForeignKey("IdFuel")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entities.CarModel", "Model")
-                        .WithMany("Cars")
-                        .HasForeignKey("IdModel")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Brand");
-
-                    b.Navigation("Category");
-
-                    b.Navigation("Fuel");
-
-                    b.Navigation("Model");
                 });
 
             modelBuilder.Entity("Entities.CarBrand", b =>
-                {
-                    b.Navigation("Cars");
-                });
-
-            modelBuilder.Entity("Entities.CarCategory", b =>
-                {
-                    b.Navigation("Cars");
-                });
-
-            modelBuilder.Entity("Entities.CarFuel", b =>
-                {
-                    b.Navigation("Cars");
-                });
-
-            modelBuilder.Entity("Entities.CarModel", b =>
                 {
                     b.Navigation("Cars");
                 });
