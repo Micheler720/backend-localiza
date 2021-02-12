@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Infra.Database.Implementations.EntityFramework.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using ViewModel;
+using Infra.Database.Implementations.EntityFramework.Repositories.UsersRespository;
 
 namespace api.Controllers
 {
@@ -20,14 +21,14 @@ namespace api.Controllers
     public class UserController : ControllerBase
     {
         private readonly ILogger<UserController> _logger;
-        private readonly IBaseRepository<User> _context;
+        private readonly IUserRepository<User> _context;
         private readonly UserSave _userSave;
         private readonly UserList _userList;
 
         public UserController(ILogger<UserController> logger, ContextEntity context)
         {
             _logger = logger;
-            this._context = new BaseEntityRepository<User>(context);
+            this._context =  new UserRepositoryEntity(context);
             this._userSave = new UserSave(_context);
             this._userList = new UserList(_context);
         }

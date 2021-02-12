@@ -1,3 +1,4 @@
+using System;
 using Entities.Roles;
 
 namespace Entities.Interfaces
