@@ -59,6 +59,9 @@ namespace Infra.Database.Implementations.EntityFramework
             .HasForeignKey<Appointment>(b => b.IdCheckList);
            
         }
+        
+        public DbSet<Appointment> Appointments { get; set;}
+        public DbSet<CheckList> CheckLists { get; set;}
         public DbSet<Car> Cars { get; set;}        
         public DbSet<Operator> Operators { get; set; }
         public DbSet<Client> Clients { get; set; }           
@@ -66,8 +69,6 @@ namespace Infra.Database.Implementations.EntityFramework
         public DbSet<CarCategory> car_categories { get; set;}
         public DbSet<CarFuel> car_fuels { get; set;}
         public DbSet<CarModel> car_models { get; set;}
-        public DbSet<Appointment> Appointments { get; set;}
-        public DbSet<CheckList> CheckLists { get; set;}
 
     }
 }

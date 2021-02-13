@@ -15,14 +15,14 @@ namespace Entities
         public DateTime Schedule { get; set; }
 
         [Required]
-        public DateTime DateTimeExpectedCollection { get; set; }
-
-        [Required]
-        public DateTime DateTimeCollected { get; set; }
+        public DateTime DateTimeExpectedCollected { get; set; }
+        
+        public DateTime? DateTimeCollected { get; set; }
 
         [Required]
         public DateTime DateTimeExpectedDelivery { get; set; }
-        public DateTime DateTimeDelivery { get; set; }
+
+        public DateTime? DateTimeDelivery { get; set; }
 
         [Required]
         public Double HourPrice { get; set; }
@@ -53,9 +53,9 @@ namespace Entities
         [Required]
         public int IdOperator { get; set; }  
 
-        public Operator Operator { get; set; }  
-        
-        public int IdCheckList { get; set; }
+        public Operator Operator { get; set; }   
+             
+        public int? IdCheckList { get; set; }
         public CheckList CheckList { get; set; }
     }
 }

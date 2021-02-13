@@ -4,14 +4,16 @@ using Infra.Database.Implementations.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace api.Migrations
 {
     [DbContext(typeof(ContextEntity))]
-    partial class ContextEntityModelSnapshot : ModelSnapshot
+    [Migration("20210213183834_ChecklistIdPermitNull")]
+    partial class ChecklistIdPermitNull
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,13 +34,13 @@ namespace api.Migrations
                     b.Property<double>("Amount")
                         .HasColumnType("float");
 
-                    b.Property<DateTime?>("DateTimeCollected")
+                    b.Property<DateTime>("DateTimeCollected")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateTimeDelivery")
+                    b.Property<DateTime>("DateTimeDelivery")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateTimeExpectedCollected")
+                    b.Property<DateTime>("DateTimeExpectedCollection")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DateTimeExpectedDelivery")
