@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -42,5 +43,7 @@ namespace Entities
         public int IdModel {get; set; }
 
         public CarModel Model { get; set; }
+
+        public List<Appointment> Appointments { get; set;}
     }
 }

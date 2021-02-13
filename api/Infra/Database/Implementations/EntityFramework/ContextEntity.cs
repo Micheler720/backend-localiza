@@ -32,19 +32,42 @@ namespace Infra.Database.Implementations.EntityFramework
                 .HasOne(c => c.Fuel)
                 .WithMany(b => b.Cars)
                 .HasForeignKey(c => c.IdFuel);
+
             modelBuilder.Entity<Car>()
                 .HasOne(c => c.Model)
                 .WithMany(b => b.Cars)
                 .HasForeignKey(c => c.IdModel);
+
+            modelBuilder.Entity<Appointment>()
+                .HasOne(a => a.Car)
+                .WithMany(c => c.Appointments)
+                .HasForeignKey(a => a.IdCar);
+
+             modelBuilder.Entity<Appointment>()
+                .HasOne(a => a.Client)
+                .WithMany(c => c.Appointments)
+                .HasForeignKey(a => a.IdClient);
+
+             modelBuilder.Entity<Appointment>()
+                .HasOne(a => a.Operator)
+                .WithMany(c => c.Appointments)
+                .HasForeignKey(a => a.IdOperator);
+
+            modelBuilder.Entity<CheckList>()
+            .HasOne(b => b.Appointment)
+            .WithOne(i => i.CheckList)
+            .HasForeignKey<Appointment>(b => b.IdCheckList);
+           
         }
         public DbSet<Car> Cars { get; set;}        
         public DbSet<Operator> Operators { get; set; }
-        public DbSet<Client> Clients { get; set; }        
-        public DbSet<IUser> Users { get; set; }        
+        public DbSet<Client> Clients { get; set; }           
         public DbSet<CarBrand> car_brands { get; set; }
         public DbSet<CarCategory> car_categories { get; set;}
         public DbSet<CarFuel> car_fuels { get; set;}
         public DbSet<CarModel> car_models { get; set;}
+        public DbSet<Appointment> Appointments { get; set;}
+        public DbSet<CheckList> CheckLists { get; set;}
 
     }
 }

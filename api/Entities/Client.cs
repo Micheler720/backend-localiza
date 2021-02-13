@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Entities.Interfaces;
@@ -6,11 +7,10 @@ using Entities.Roles;
 
 namespace Entities
 {
-    [Table("users")]
+    [Table("clients")]
     public class Client : IUser, IPerson
     {
 
-        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -28,6 +28,8 @@ namespace Entities
 
         [Required]
         public UserRole UserRole { get; set; }
+        
+        public List<Appointment> Appointments { get; set;}
         
     }
 }

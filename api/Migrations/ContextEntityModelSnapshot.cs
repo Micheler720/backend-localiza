@@ -19,6 +19,72 @@ namespace api.Migrations
                 .HasAnnotation("ProductVersion", "5.0.3")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Entities.Appointment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("AdditionalCosts")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("DateTimeCollected")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateTimeDelivery")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateTimeExpectedCollection")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateTimeExpectedDelivery")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("HourLocation")
+                        .HasColumnType("int");
+
+                    b.Property<double>("HourPrice")
+                        .HasColumnType("float");
+
+                    b.Property<int>("IdCar")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdCheckList")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdClient")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdOperator")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Inspected")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("Schedule")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Subtotal")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdCar");
+
+                    b.HasIndex("IdCheckList")
+                        .IsUnique();
+
+                    b.HasIndex("IdClient");
+
+                    b.HasIndex("IdOperator");
+
+                    b.ToTable("appointments");
+                });
+
             modelBuilder.Entity("Entities.Car", b =>
                 {
                     b.Property<int>("Id")
@@ -106,7 +172,7 @@ namespace api.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Fuel")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
@@ -133,7 +199,34 @@ namespace api.Migrations
                     b.ToTable("car_models");
                 });
 
-            modelBuilder.Entity("Entities.User", b =>
+            modelBuilder.Entity("Entities.CheckList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("CleanCar")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Crumpled")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("FullTank")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Scratches")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("TankLightsPendant")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CheckLists");
+                });
+
+            modelBuilder.Entity("Entities.Client", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -157,6 +250,31 @@ namespace api.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
+                    b.Property<int>("UserRole")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("clients");
+                });
+
+            modelBuilder.Entity("Entities.Operator", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
                     b.Property<string>("Registration")
                         .HasMaxLength(9)
                         .HasColumnType("nvarchar(9)");
@@ -166,7 +284,42 @@ namespace api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("users");
+                    b.ToTable("operators");
+                });
+
+            modelBuilder.Entity("Entities.Appointment", b =>
+                {
+                    b.HasOne("Entities.Car", "Car")
+                        .WithMany("Appointments")
+                        .HasForeignKey("IdCar")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.CheckList", "CheckList")
+                        .WithOne("Appointment")
+                        .HasForeignKey("Entities.Appointment", "IdCheckList")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.Client", "Client")
+                        .WithMany("Appointments")
+                        .HasForeignKey("IdClient")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.Operator", "Operator")
+                        .WithMany("Appointments")
+                        .HasForeignKey("IdOperator")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Car");
+
+                    b.Navigation("CheckList");
+
+                    b.Navigation("Client");
+
+                    b.Navigation("Operator");
                 });
 
             modelBuilder.Entity("Entities.Car", b =>
@@ -204,6 +357,11 @@ namespace api.Migrations
                     b.Navigation("Model");
                 });
 
+            modelBuilder.Entity("Entities.Car", b =>
+                {
+                    b.Navigation("Appointments");
+                });
+
             modelBuilder.Entity("Entities.CarBrand", b =>
                 {
                     b.Navigation("Cars");
@@ -222,6 +380,21 @@ namespace api.Migrations
             modelBuilder.Entity("Entities.CarModel", b =>
                 {
                     b.Navigation("Cars");
+                });
+
+            modelBuilder.Entity("Entities.CheckList", b =>
+                {
+                    b.Navigation("Appointment");
+                });
+
+            modelBuilder.Entity("Entities.Client", b =>
+                {
+                    b.Navigation("Appointments");
+                });
+
+            modelBuilder.Entity("Entities.Operator", b =>
+                {
+                    b.Navigation("Appointments");
                 });
 #pragma warning restore 612, 618
         }

@@ -34,8 +34,6 @@ namespace Entities
 
         public Double AdditionalCosts {get; set; }
 
-        public CarCategory Category { get; set; }
-
         [Required]
         public Double Amount {get; set; }
 
@@ -45,15 +43,19 @@ namespace Entities
         [Required]
         public int IdClient { get; set; }   
 
-        public List<Client> Clients { get; set; }
+        public Client Client { get; set; }
 
         [Required]
         public int IdCar { get; set; } 
 
-        [Required]
-        public int IdOperator { get; set; }    
+        public Car Car { get; set; }
 
         [Required]
-        public int IdCheckList { get; set; } 
+        public int IdOperator { get; set; }  
+
+        public Operator Operator { get; set; }  
+        
+        public int IdCheckList { get; set; }
+        public CheckList CheckList { get; set; }
     }
 }

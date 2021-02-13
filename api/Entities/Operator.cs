@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Entities.Interfaces;
@@ -6,11 +7,10 @@ using Entities.Roles;
 namespace Entities
 {
     
-    [Table("users")]
+    [Table("operators")]
     public class Operator : IUser, IOperator
     {
         
-        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -20,12 +20,13 @@ namespace Entities
         [Required]
         [MaxLength(15)]
         public string Password { get; set; }
-
         
         [Required]
         public UserRole UserRole { get; set; }
         
         [MaxLength(9)]
         public string Registration { get; set; }
+        
+        public List<Appointment> Appointments { get; set;}
     }
 }
