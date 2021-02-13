@@ -97,12 +97,12 @@ namespace api.Controllers
         [HttpPut]
         [Route("/appointments")]
         [AllowAnonymous]
-        public async Task<IActionResult> Update([FromBody]Appointment appointment)
+        public async Task<IActionResult> Update([FromBody]AppointmentUpdateView appointmentBody)
         {
             try
             {
                 
-                await _save.Execute(appointment);
+                await _save.Execute(EntityBuilder.Call<Appointment>(appointmentBody));
                 return StatusCode(204);
             }
             catch(UniqUserRegisterCpf err)

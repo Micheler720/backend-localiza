@@ -29,28 +29,28 @@ namespace Domains.UseCase.AppointmentService
 
         public async Task Execute(Appointment appointment)
         {
+            if(appointment.HourPrice <= 0 ) throw new ValuesInvalidException("Valor de hora por locação invalido. Verifique!");
+            if(appointment.HourLocation <= 0 ) throw new ValuesInvalidException("Quantidade de horas locadas invalido. Verifique!");
+            if(appointment.Subtotal <= 0 ) throw new ValuesInvalidException("SubTotal Inválido. Verifique!");
+            if(appointment.Amount <= 0 ) throw new ValuesInvalidException("Total invalido.Verifique!");
+
+            var car = await _repositoryCar.FindById(appointment.IdCar);
+            if(car == null) throw new NotFoundRegisterException("Carro não encontrado, verifique informações.");
+                
+            var client = await _repositoryClient.FindById(appointment.IdClient);
+            if(client == null) throw new NotFoundRegisterException("Cliente não encontrado, verifique informações.");
+                
+            var op = await _repositoryOperator.FindById(appointment.IdOperator);
+            if(op == null) throw new NotFoundRegisterException("Operador não encontrado, verifique informações.");
+
+
             if(appointment.Id == 0)
             {
                 if(appointment.DateTimeExpectedCollected > appointment.DateTimeCollected) throw new DateTimeColectedInvalidException("Data da coleta maior que a data esperada para coleta verifique.");
                 
                 if(appointment.DateTimeExpectedCollected > appointment.DateTimeExpectedDelivery) throw new DateTimeColectedInvalidException("Data esperada da coleta maior que a data esperada para entrega. Verifique.");
                 
-                if(appointment.DateTimeExpectedCollected < DateTime.Now) throw new DateTimeColectedInvalidException("Data esperada da coleta menor que data atual. Verifique!");
-
-                
-                if(appointment.HourPrice <= 0 ) throw new ValuesInvalidException("Valor de hora por locação invalido. Verifique!");
-                if(appointment.HourLocation <= 0 ) throw new ValuesInvalidException("Quantidade de horas locadas invalido. Verifique!");
-                if(appointment.Subtotal <= 0 ) throw new ValuesInvalidException("SubTotal Inválido. Verifique!");
-                if(appointment.Amount <= 0 ) throw new ValuesInvalidException("Total invalido.Verifique!");
-                
-                var car = await _repositoryCar.FindById(appointment.IdCar);
-                if(car == null) throw new NotFoundRegisterException("Carro não encontrado, verifique informações.");
-                
-                var client = await _repositoryClient.FindById(appointment.IdClient);
-                if(client == null) throw new NotFoundRegisterException("Cliente não encontrado, verifique informações.");
-                
-                var op = await _repositoryOperator.FindById(appointment.IdOperator);
-                if(op == null) throw new NotFoundRegisterException("Operador não encontrado, verifique informações.");
+                if(appointment.DateTimeExpectedCollected < DateTime.Now) throw new DateTimeColectedInvalidException("Data esperada da coleta menor que data atual. Verifique!");   
 
                 var avalabilityCar = await _repository.CheckAvailabilityCar(appointment.IdCar, appointment.DateTimeExpectedCollected);
                 if(!avalabilityCar ) throw new CarNotAvalabityException("Carro já está alocado.");
@@ -68,6 +68,7 @@ namespace Domains.UseCase.AppointmentService
 
                 return;
             }
+            
             await _repository.Update(appointment);
         }
     }
