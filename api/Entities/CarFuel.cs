@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Domains.Interfaces;
 
 namespace Entities
 {
@@ -12,7 +13,7 @@ namespace Entities
 
         [Required]
         [MaxLength(150)]
-        public string Fuel { get; set; }
+        public string Name { get; set; }
         public List<Car> Cars { get; set; }
 
     }

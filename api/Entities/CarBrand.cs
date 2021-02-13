@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Domains.Interfaces;
 
 namespace Entities
 {
     [Table("car_brands")]
-    public class CarBrand
+    public class CarBrand 
     {
         [Key]
         public int Id { get; set; }

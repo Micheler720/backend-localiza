@@ -22,6 +22,7 @@ namespace Infra.Database.Implementations.EntityFramework.Repositories
             _context.Set<T>().Add(entity);
             await _context.SaveChangesAsync();
         }
+        
 
         public async Task Delete(T entity)
         {
