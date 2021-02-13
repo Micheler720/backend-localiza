@@ -4,7 +4,7 @@ using Domains.Repositories;
 using Entities;
 using Domains.UseCase.UserServices.Exceptions;
 
-namespace Domains.UseCase
+namespace Domains.UseCase.CarServices
 {
     public class CarDeleteService
     {

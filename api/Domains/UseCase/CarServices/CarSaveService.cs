@@ -21,7 +21,7 @@ namespace Domains.UseCase.CarServices
 
             if(carExist != null) throw new CarExistException("Carro já cadastrado, não é possivel realizar o cadastro.");
 
-            if(car.Id != 0 )
+            if(car.Id == 0 )
             {
                 await this._repository.Add(car);
             }else
