@@ -5,7 +5,7 @@ using Domains.Repositories;
 using Entities;
 using Entities.Interfaces;
 using Entities.Roles;
-using ViewModel;
+using ViewModel.Users;
 
 namespace Domains.UseCase.UserServices
 {

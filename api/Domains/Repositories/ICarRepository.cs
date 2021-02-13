@@ -7,8 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Domains.Repositories
 {
-    public interface IUserCarRepository<User> : IBaseRepository<User> where User : class
+    public interface ICarRepository<Car> : IBaseRepository<Car> where Car : class
     {
         
+        Task<Car> FindById(int id);
+        Task<Car> FindByBoard(string board);
+        Task<Car> FindByIsBoardNotId(Car car);
     }
 }

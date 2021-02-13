@@ -12,7 +12,7 @@ namespace Entities
 
         [Required]
         [MaxLength(8)]
-        public string Placa { get; set; }
+        public string Board { get; set; }
 
         [Required]
         public Double HourPrice { get; set; }

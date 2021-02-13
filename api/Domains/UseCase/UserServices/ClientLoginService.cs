@@ -3,7 +3,7 @@ using Entities;
 using Domains.Interfaces;
 using System.Threading.Tasks;
 using Domains.UseCase.UserServices.Exceptions;
-using ViewModel;
+using ViewModel.Users;
 
 namespace Domains.UseCase.UserServices
 {

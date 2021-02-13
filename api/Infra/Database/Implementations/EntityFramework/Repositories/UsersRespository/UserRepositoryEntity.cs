@@ -41,7 +41,7 @@ namespace Infra.Database.Implementations.EntityFramework.Repositories.UsersRespo
 
         public async Task<User> FindById(int id)
         {
-             var query = from u in _context.Users
+            var query = from u in _context.Users
                 where  id == u.Id
                 select u;
             return await query.FirstOrDefaultAsync<User>() as User;

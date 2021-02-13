@@ -1,6 +1,6 @@
 using System;
 
-namespace ViewModel
+namespace ViewModel.Users
 {
     public record ClientView
     {

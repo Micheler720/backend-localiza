@@ -12,7 +12,7 @@ namespace Entities
 
         [Required]
         [MaxLength(150)]
-        public string Category { get; set; }
+        public string Name { get; set; }
         public List<Car> Cars { get; set; }
 
     }

@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Infra.Database.Implementations.EntityFramework.Repositories;
 using Microsoft.AspNetCore.Authorization;
-using ViewModel;
+using ViewModel.Users;
 using Infra.Database.Implementations.EntityFramework.Repositories.UsersRespository;
 using Infra.Authentication;
 using Entities.Roles;
