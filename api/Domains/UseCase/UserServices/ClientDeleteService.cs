@@ -2,14 +2,15 @@ using System.Threading.Tasks;
 using Domains.Repositories;
 using Domains.UseCase.UserServices.Exceptions;
 using Entities;
+using Entities.Interfaces;
 
 namespace Domains.UseCase.UserServices
 {
-    public class UserDeleteService
+    public class ClientDeleteService
     {
-        private IUserRepository<User> _repository;
+        private IClientRepository<Client> _repository;
         
-        public UserDeleteService(IUserRepository<User> repository)
+        public ClientDeleteService(IClientRepository<Client> repository)
         {
             this._repository = repository;
         }
@@ -17,10 +18,10 @@ namespace Domains.UseCase.UserServices
         public async Task Execute(int id)
         {
             var user = await this._repository.FindById(id);
-            if (user.Id == 0) throw new UserNotFound("Usuário não cadastrado.");
-            var userRepository =  await this._repository.Filter( userRepository => userRepository.Id == user.Id );
+            if (id == 0) throw new UserNotFound("Usuário não cadastrado.");
+            var userRepository =  await this._repository.FindById(id);
             if(userRepository == null ) throw new UserNotFound("Usuário não cadastrado.");
-            await this._repository.Delete(user);
+            await this._repository.Delete(userRepository);
         }
     }
 }

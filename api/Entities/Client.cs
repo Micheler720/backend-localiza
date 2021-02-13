@@ -7,7 +7,7 @@ using Entities.Roles;
 namespace Entities
 {
     [Table("users")]
-    public class User : IUser, IPerson, IOperator
+    public class Client : IUser, IPerson
     {
 
         [Key]
@@ -29,7 +29,5 @@ namespace Entities
         [Required]
         public UserRole UserRole { get; set; }
         
-        [MaxLength(9)]
-        public string Registration { get; set; }
     }
 }

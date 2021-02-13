@@ -11,9 +11,9 @@ namespace Domains.UseCase.UserServices
 {
     public class OperatorListService
     {
-        private IUserRepository<User> _repository;
+        private IOperatorRepository<Operator> _repository;
         
-        public OperatorListService(IUserRepository<User> repository)
+        public OperatorListService(IOperatorRepository<Operator> repository)
         {
             this._repository = repository;
         }

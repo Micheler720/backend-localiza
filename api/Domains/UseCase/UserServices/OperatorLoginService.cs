@@ -9,9 +9,9 @@ namespace Domains.UseCase.UserServices
 {
     public class OperatorLoginService
     {
-        private IUserRepository<User> _repository;
+        private IOperatorRepository<Operator> _repository;
         
-        public OperatorLoginService(IUserRepository<User> repository)
+        public OperatorLoginService(IOperatorRepository<Operator> repository)
         {
             this._repository = repository;
         }
@@ -23,9 +23,9 @@ namespace Domains.UseCase.UserServices
            return new OperatorJWT(){
              Id = loggedUser.Id,
              Name = loggedUser.Name,
-             Registration = loggedUser.Cpf,
+             Registration = loggedUser.Registration,
              Role = loggedUser.UserRole.ToString(),
-             Token = token.TokenGenerate(loggedUser)
+             Token = token.TokenGenerateOperator(loggedUser)
            };
         }
     }

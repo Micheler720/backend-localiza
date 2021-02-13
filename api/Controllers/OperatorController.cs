@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Domains.Repositories;
 using Domains.UseCase.UserServices;
 using Domains.UseCase.UserServices.Exceptions;
 using Entities;
 using Infra.Database.Implementations.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Infra.Database.Implementations.EntityFramework.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using ViewModel.Users;
-using Infra.Database.Implementations.EntityFramework.Repositories.UsersRespository;
 using Infra.Authentication;
-using Entities.Roles;
+using Domains.Repositories;
+using Infra.Database.Implementations.EntityFramework.Repositories.UsersRespository;
 
 namespace api.Controllers
 {
@@ -23,20 +20,20 @@ namespace api.Controllers
     public class OperatorController : ControllerBase
     {
         private readonly ILogger<OperatorController> _logger;
-        private readonly IUserRepository<User> _context;
-        private readonly UserSaveService _userSave;
+        private readonly IOperatorRepository<Operator> _context;
+        private readonly OperatorSaveService _userSave;
         private readonly OperatorListService _userList;
-        private readonly UserDeleteService _userDelete;
+        private readonly OperatorDeleteService _userDelete;
         private readonly OperatorLoginService _clientLogin;
 
         public OperatorController(ILogger<OperatorController> logger, ContextEntity context)
         {
             _logger = logger;
-            this._context =  new UserRepositoryEntity(context);
-            this._userSave = new UserSaveService(_context);
+            this._context =  new OperatorRepositoryEntity(context);
+            this._userSave = new OperatorSaveService(_context);
             this._userList = new OperatorListService(_context);
             this._clientLogin = new OperatorLoginService(_context);
-            this._userDelete = new UserDeleteService(_context);
+            this._userDelete = new OperatorDeleteService(_context);
         }
 
         [HttpGet]
@@ -54,7 +51,7 @@ namespace api.Controllers
         {
             try
             {
-                var user = new User() 
+                var user = new Operator() 
                 {  
                     Registration = userBody.Registration, 
                     Name = userBody.Name, 
@@ -78,7 +75,7 @@ namespace api.Controllers
         {
             try
             {
-                var user = new User() 
+                var user = new Operator() 
                 {  
                     Id = userBody.Id,
                     Registration = userBody.Registration, 

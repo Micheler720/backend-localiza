@@ -15,6 +15,7 @@ using ViewModel.Users;
 using Infra.Database.Implementations.EntityFramework.Repositories.UsersRespository;
 using Infra.Authentication;
 using Entities.Roles;
+using Entities.Interfaces;
 
 namespace api.Controllers
 {
@@ -23,20 +24,20 @@ namespace api.Controllers
     public class ClientController : ControllerBase
     {
         private readonly ILogger<ClientController> _logger;
-        private readonly IUserRepository<User> _context;
-        private readonly UserSaveService _userSave;
+        private readonly IClientRepository<Client> _context;
+        private readonly ClientSaveService _userSave;
         private readonly ClientListService _userList;
-        private readonly UserDeleteService _userDelete;
+        private readonly ClientDeleteService _userDelete;
         private readonly ClientLoginService _clientLogin;
 
         public ClientController(ILogger<ClientController> logger, ContextEntity context)
         {
             _logger = logger;
-            this._context =  new UserRepositoryEntity(context);
-            this._userSave = new UserSaveService(_context);
-            this._userList = new ClientListService(_context);
-            this._clientLogin = new ClientLoginService(_context);
-            this._userDelete = new UserDeleteService(_context);
+            _context =  new ClientRepositoryEntity(context);
+            _userSave = new ClientSaveService(_context);
+            _userList = new ClientListService(_context);
+            _clientLogin = new ClientLoginService(_context);
+            _userDelete = new ClientDeleteService(_context);
         }
 
         [HttpGet]
@@ -54,7 +55,7 @@ namespace api.Controllers
         {
             try
             {
-                var user = new User() 
+                var user = new Client() 
                 {  
                     Cpf = userBody.Cpf, 
                     Name = userBody.Name, 
@@ -79,7 +80,7 @@ namespace api.Controllers
         {
             try
             {                
-                var user = new User() 
+                var user = new Client() 
                 {  
                     Id = userBody.Id,
                     Cpf = userBody.Cpf, 

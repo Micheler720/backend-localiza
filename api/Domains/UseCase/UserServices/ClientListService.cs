@@ -11,9 +11,9 @@ namespace Domains.UseCase.UserServices
 {
     public class ClientListService
     {
-        private IUserRepository<User> _repository;
+        private IClientRepository<Client> _repository;
         
-        public ClientListService(IUserRepository<User> repository)
+        public ClientListService(IClientRepository<Client> repository)
         {
             this._repository = repository;
         }

@@ -9,13 +9,7 @@ namespace Entities
     [Table("users")]
     public class Operator : IUser, IOperator
     {
-        private UserRole _userRole;
-
-        public Operator()
-        {
-            this._userRole = UserRole.Operator;
-        }
-
+        
         [Key]
         public int Id { get; set; }
 
@@ -27,14 +21,9 @@ namespace Entities
         [MaxLength(15)]
         public string Password { get; set; }
 
+        
         [Required]
-        public UserRole UserRole
-        {
-            get
-            { 
-                return _userRole;
-            }
-        }
+        public UserRole UserRole { get; set; }
         
         [MaxLength(9)]
         public string Registration { get; set; }

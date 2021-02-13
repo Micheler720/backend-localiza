@@ -37,9 +37,10 @@ namespace Infra.Database.Implementations.EntityFramework
                 .WithMany(b => b.Cars)
                 .HasForeignKey(c => c.IdModel);
         }
-        public DbSet<Car> Cars { get; set;}
-        
-        public DbSet<User> Users { get; set; }
+        public DbSet<Car> Cars { get; set;}        
+        public DbSet<Operator> Operators { get; set; }
+        public DbSet<Client> Clients { get; set; }        
+        public DbSet<IUser> Users { get; set; }        
         public DbSet<CarBrand> car_brands { get; set; }
         public DbSet<CarCategory> car_categories { get; set;}
         public DbSet<CarFuel> car_fuels { get; set;}

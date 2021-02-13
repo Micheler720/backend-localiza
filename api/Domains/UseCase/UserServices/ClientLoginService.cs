@@ -9,9 +9,9 @@ namespace Domains.UseCase.UserServices
 {
     public class ClientLoginService
     {
-        private IUserRepository<User> _repository;
+        private IClientRepository<Client> _repository;
         
-        public ClientLoginService(IUserRepository<User> repository)
+        public ClientLoginService(IClientRepository<Client> repository)
         {
             this._repository = repository;
         }
@@ -25,7 +25,7 @@ namespace Domains.UseCase.UserServices
              Name = loggedUser.Name,
              Cpf = loggedUser.Cpf,
              Role = loggedUser.UserRole.ToString(),
-             Token = token.TokenGenerate(loggedUser)
+             Token = token.TokenGenerateClient(loggedUser)
            };
         }
     }
