@@ -31,5 +31,21 @@ namespace Infra.Database.Fake
                         .Where(data => data.Id == id )
                         .FirstOrDefault();
         }
+
+        public async Task<User> FindByCpfAndPassword(string cpf, string password)
+        {
+            await Task.Delay(2000);
+            return this._data
+                        .Where(data => data.Cpf == cpf && data.Password == password )
+                        .FirstOrDefault();
+        }
+
+        public async Task<User> FindByRegistrationAndPassword(string registration, string password)
+        {
+            await Task.Delay(2000);
+            return this._data
+                        .Where(data => data.Registration == registration && data.Password == password )
+                        .FirstOrDefault();
+        }
     }
 }

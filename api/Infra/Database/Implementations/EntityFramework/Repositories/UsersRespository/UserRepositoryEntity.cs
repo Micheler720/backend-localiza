@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Domains.Repositories;
 using Entities;
 using Entities.Interfaces;
+using Entities.Roles;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Database.Implementations.EntityFramework.Repositories.UsersRespository
@@ -41,7 +42,7 @@ namespace Infra.Database.Implementations.EntityFramework.Repositories.UsersRespo
         public async Task<User> FindById(int id)
         {
              var query = from u in _context.Users
-                where  id != u.Id
+                where  id == u.Id
                 select u;
             return await query.FirstOrDefaultAsync<User>() as User;
         }
@@ -64,5 +65,22 @@ namespace Infra.Database.Implementations.EntityFramework.Repositories.UsersRespo
             return await query.FirstOrDefaultAsync<User>() as User;
         }
 
+        public async Task<List<User>> FindByClient()
+        {
+            var userRole = UserRole.Person;
+            var query = from u in _context.Users
+                where  u.UserRole == userRole
+                select u;
+            return await query.ToListAsync<User>();
+        }
+
+        public async Task<List<User>> FindByOperator()
+        {
+            var userRole = UserRole.Operator;
+            var query = from u in _context.Users
+                where  u.UserRole == userRole
+                select u;
+            return await query.ToListAsync<User>();
+        }
     }
 }

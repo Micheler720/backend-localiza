@@ -24,7 +24,6 @@ namespace api.Controllers
         private readonly ILogger<CarController> _logger;
         private readonly IUserRepository<User> _context;
         private readonly UserSaveService _userSave;
-        private readonly UserListService _userList;
         private readonly UserDeleteService _userDelete;
         private readonly OperatorLoginService _clientLogin;
 
@@ -33,7 +32,6 @@ namespace api.Controllers
             _logger = logger;
             this._context =  new UserRepositoryEntity(context);
             this._userSave = new UserSaveService(_context);
-            this._userList = new UserListService(_context);
             this._clientLogin = new OperatorLoginService(_context);
             this._userDelete = new UserDeleteService(_context);
         }
@@ -41,9 +39,9 @@ namespace api.Controllers
         [HttpGet]
         [Route("/cars")]
         [AllowAnonymous]
-        public async Task<List<UserView>> Get ()
+        public async Task Get ()
         {
-            return await this._userList.Execute();
+            throw new NotImplementedException();
         }
 
         [HttpPost]

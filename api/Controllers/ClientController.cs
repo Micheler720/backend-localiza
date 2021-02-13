@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 using ViewModel;
 using Infra.Database.Implementations.EntityFramework.Repositories.UsersRespository;
 using Infra.Authentication;
+using Entities.Roles;
 
 namespace api.Controllers
 {
@@ -24,7 +25,7 @@ namespace api.Controllers
         private readonly ILogger<ClientController> _logger;
         private readonly IUserRepository<User> _context;
         private readonly UserSaveService _userSave;
-        private readonly UserListService _userList;
+        private readonly ClientListService _userList;
         private readonly UserDeleteService _userDelete;
         private readonly ClientLoginService _clientLogin;
 
@@ -33,7 +34,7 @@ namespace api.Controllers
             _logger = logger;
             this._context =  new UserRepositoryEntity(context);
             this._userSave = new UserSaveService(_context);
-            this._userList = new UserListService(_context);
+            this._userList = new ClientListService(_context);
             this._clientLogin = new ClientLoginService(_context);
             this._userDelete = new UserDeleteService(_context);
         }
@@ -41,7 +42,7 @@ namespace api.Controllers
         [HttpGet]
         [Route("/clients")]
         [AllowAnonymous]
-        public async Task<List<UserView>> Get ()
+        public async Task<List<ClientView>> Get ()
         {
             return await this._userList.Execute();
         }
@@ -49,10 +50,17 @@ namespace api.Controllers
         [HttpPost]
         [Route("/clients")]
         [AllowAnonymous]
-        public async Task<IActionResult> Create([FromBody] User user)
+        public async Task<IActionResult> Create([FromBody] ClientSaveView userBody)
         {
             try
             {
+                var user = new User() 
+                {  
+                    Cpf = userBody.Cpf, 
+                    Name = userBody.Name, 
+                    Password = userBody.Password, 
+                    Birthay = userBody.Birthay                  
+                };
                 await _userSave.Execute(user);
                 return StatusCode(201);
             }
@@ -67,10 +75,18 @@ namespace api.Controllers
         [HttpPut]
         [Route("/clients")]
         [AllowAnonymous]
-        public async Task<IActionResult> Update([FromBody] User user)
+        public async Task<IActionResult> Update([FromBody] ClientSaveView userBody)
         {
             try
-            {
+            {                
+                var user = new User() 
+                {  
+                    Id = userBody.Id,
+                    Cpf = userBody.Cpf, 
+                    Name = userBody.Name, 
+                    Password = userBody.Password, 
+                    Birthay = userBody.Birthay                  
+                };
                 await _userSave.Execute(user);
                 return StatusCode(204);
             }
@@ -84,7 +100,7 @@ namespace api.Controllers
         [HttpDelete]
         [Route("/clients/{id}")]
         [AllowAnonymous]
-        public async Task<IActionResult> Delete([FromBody] int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {

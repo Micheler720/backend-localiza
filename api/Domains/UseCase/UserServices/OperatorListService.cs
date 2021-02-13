@@ -4,29 +4,28 @@ using System.Threading.Tasks;
 using Domains.Repositories;
 using Entities;
 using Entities.Interfaces;
+using Entities.Roles;
 using ViewModel;
 
 namespace Domains.UseCase.UserServices
 {
-    public class UserListService
+    public class OperatorListService
     {
-        private IBaseRepository<User> _repository;
+        private IUserRepository<User> _repository;
         
-        public UserListService(IBaseRepository<User> repository)
+        public OperatorListService(IUserRepository<User> repository)
         {
             this._repository = repository;
         }
-        public async Task<List<UserView>> Execute()
+        public async Task<List<OperatorView>> Execute()
         {
-            var users =  await _repository.GetAll();
-            List<UserView> userView = users.Select( user =>                 
-                new UserView()
+            var users =  await _repository.FindByOperator();
+            List<OperatorView> userView = users.Select( user =>                 
+                new OperatorView()
                         {
                             Id = user.Id,
                             Name = user.Name,
-                            Registration= user.Registration,
-                            Birthay = user.Birthay,
-                            Cpf = user.Cpf
+                            Registration = user.Registration,
                         } ).ToList();
 
             return userView;

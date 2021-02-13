@@ -6,6 +6,7 @@ using Domains.UseCase.UserServices.Exceptions;
 using Entities;
 using Entities.Interfaces;
 using Entities.Roles;
+using ViewModel;
 
 namespace Domains.UseCase.UserServices
 {
@@ -28,12 +29,12 @@ namespace Domains.UseCase.UserServices
             if(user.Cpf != null ) 
             {
                 user.UserRole = UserRole.Person;
-                userExist = await _repository.FindByOperatorRegisterNot(user);
+                userExist = await _repository.FindByPersonRegisterNot(user);
             }
             else
             {
                 user.UserRole = UserRole.Operator;  
-                userExist = await _repository.FindByPersonRegisterNot(user);
+                userExist = await _repository.FindByOperatorRegisterNot(user);
             }
 
             if(userExist != null) throw new UniqUserRegisterCpf("Usuário já registrado.");

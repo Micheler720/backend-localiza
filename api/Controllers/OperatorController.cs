@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 using ViewModel;
 using Infra.Database.Implementations.EntityFramework.Repositories.UsersRespository;
 using Infra.Authentication;
+using Entities.Roles;
 
 namespace api.Controllers
 {
@@ -24,7 +25,7 @@ namespace api.Controllers
         private readonly ILogger<OperatorController> _logger;
         private readonly IUserRepository<User> _context;
         private readonly UserSaveService _userSave;
-        private readonly UserListService _userList;
+        private readonly OperatorListService _userList;
         private readonly UserDeleteService _userDelete;
         private readonly OperatorLoginService _clientLogin;
 
@@ -33,7 +34,7 @@ namespace api.Controllers
             _logger = logger;
             this._context =  new UserRepositoryEntity(context);
             this._userSave = new UserSaveService(_context);
-            this._userList = new UserListService(_context);
+            this._userList = new OperatorListService(_context);
             this._clientLogin = new OperatorLoginService(_context);
             this._userDelete = new UserDeleteService(_context);
         }
@@ -41,7 +42,7 @@ namespace api.Controllers
         [HttpGet]
         [Route("/operators")]
         [AllowAnonymous]
-        public async Task<List<UserView>> Get ()
+        public async Task<List<OperatorView>> Get ()
         {
             return await this._userList.Execute();
         }
@@ -49,10 +50,16 @@ namespace api.Controllers
         [HttpPost]
         [Route("/operators")]
         [AllowAnonymous]
-        public async Task<IActionResult> Create([FromBody] User user)
+        public async Task<IActionResult> Create([FromBody] OperatorSaveView userBody)
         {
             try
             {
+                var user = new User() 
+                {  
+                    Registration = userBody.Registration, 
+                    Name = userBody.Name, 
+                    Password = userBody.Password                 
+                };
                 await _userSave.Execute(user);
                 return StatusCode(201);
             }
@@ -67,10 +74,17 @@ namespace api.Controllers
         [HttpPut]
         [Route("/operators")]
         [AllowAnonymous]
-        public async Task<IActionResult> Update([FromBody] User user)
+        public async Task<IActionResult> Update([FromBody]OperatorSaveView userBody)
         {
             try
             {
+                var user = new User() 
+                {  
+                    Id = userBody.Id,
+                    Registration = userBody.Registration, 
+                    Name = userBody.Name, 
+                    Password = userBody.Password                 
+                };
                 await _userSave.Execute(user);
                 return StatusCode(204);
             }
@@ -84,7 +98,7 @@ namespace api.Controllers
         [HttpDelete]
         [Route("/operators/{id}")]
         [AllowAnonymous]
-        public async Task<IActionResult> Delete([FromBody] int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {

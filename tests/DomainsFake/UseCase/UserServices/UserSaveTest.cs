@@ -11,14 +11,14 @@ namespace DomainsFake.UseCase.UserServices
 {
     public class UserSaveTest
     {        
-        private UserSave _service;
+        private UserSaveService _service;
         private FakeUserRepository _repository;
 
         [SetUp]
         public void Setup()
         {
             this._repository = new FakeUserRepository();
-            this._service = new UserSave(_repository);
+            this._service = new UserSaveService(_repository);
         }
 
         

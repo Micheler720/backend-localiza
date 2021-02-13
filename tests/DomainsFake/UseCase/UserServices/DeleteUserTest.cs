@@ -11,12 +11,12 @@ namespace DomainsFake.UseCase.UserServices
     public class DeleteUserTest
     {
         private UserDeleteService _service;
-        private FakeBaseRepository<User> _repository;
+        private FakeUserRepository _repository;
 
         [SetUp]
         public void Setup()
         {
-            this._repository = new FakeBaseRepository<User>();
+            this._repository = new FakeUserRepository();
             this._service = new UserDeleteService(_repository);
 
         }
@@ -34,7 +34,7 @@ namespace DomainsFake.UseCase.UserServices
             Exception exception = null;
             try
             {
-              await this._service.Execute(user);
+              await this._service.Execute(123);
             }
             catch (UserNotFound ex)
             {
@@ -57,7 +57,7 @@ namespace DomainsFake.UseCase.UserServices
             Exception exception = null;
             try
             {
-              await this._service.Execute(user);
+              await this._service.Execute(123);
             }
             catch (UserNotFound ex)
             {
@@ -78,7 +78,7 @@ namespace DomainsFake.UseCase.UserServices
             Exception exception = null;
             try
             {
-              await this._service.Execute(user);
+              await this._service.Execute(123);
             }
             catch (UserNotFound ex)
             {

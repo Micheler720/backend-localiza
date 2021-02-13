@@ -14,5 +14,7 @@ namespace Domains.Repositories
         Task<User> FindById(int id);
         Task<User> FindByCpfAndPassword(string cpf, string password);
         Task<User> FindByRegistrationAndPassword(string registration, string password);
+        Task<List<User>> FindByClient();
+        Task<List<User>> FindByOperator();
     }
 }

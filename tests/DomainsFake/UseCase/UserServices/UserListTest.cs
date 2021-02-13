@@ -8,14 +8,14 @@ namespace DomainsFake.UseCase.UserServices
 {
     public class UserListTest
     {
-        private UserList _service;
+        private UserListService _service;
         private FakeUserRepository _repository;
 
         [SetUp]
         public void Setup()
         {
             this._repository = new FakeUserRepository();
-            this._service = new UserList(_repository);
+            this._service = new UserListService(_repository);
         }
 
         [Test]
