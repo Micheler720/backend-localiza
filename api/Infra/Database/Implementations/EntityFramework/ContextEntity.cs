@@ -15,7 +15,7 @@ namespace Infra.Database.Implementations.EntityFramework
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=localhost;Database=localiza;Uid=sa;Pwd=Administr@dor1");
+            optionsBuilder.UseSqlServer("Server=tcp:localizadatabase.database.windows.net,1433;Initial Catalog=localiza;Persist Security Info=False;User ID=administradorLocaliza;Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
