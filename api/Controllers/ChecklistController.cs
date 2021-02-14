@@ -1,65 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Domains.UseCase.UserServices.Exceptions;
 using Entities;
 using Infra.Database.Implementations.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using Domains.Repositories;
-using Infra.Database.Implementations.EntityFramework.Repositories.UsersRespository;
-using Infra.Database.Implementations.EntityFramework.Repositories.AppointmentRepository;
 using Domains.UseCase.AppointmentService;
-using ViewModel.Appointments;
-using Domains.UseCase.Builder;
-using Infra.Database.Implementations.EntityFramework.Repositories.CarsRepository;
 using Shared.Exceptions;
 using Domains.UseCase.AppointmentService.Exceptions;
+using Infra.Database.Implementations.EntityFramework.Repositories.AppointmentRepository;
+using ViewModel.Appointments;
+using Domains.UseCase.Builder;
 
 namespace api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AppointmentsController : ControllerBase
+    public class ChecklistController : ControllerBase
     {
-        private readonly ILogger<AppointmentsController> _logger;
-        private readonly IAppointmentRepository<Appointment> _context;
-        private readonly ICarRepository<Car> _contextCar;
-        private readonly IClientRepository<Client> _contextClient;
-        private readonly IOperatorRepository<Operator> _contextOperator;
-        private readonly AppointmentSaveService _save;
-        private readonly AppointmentListService _list;
-        private readonly AppointmentDeleteService _delete;
+        private readonly ILogger<ChecklistController> _logger;
+        private readonly IChecklistRepository<CheckList> _context;
+        private readonly IAppointmentRepository<Appointment> _contextAppointment;
+        private readonly CheckListSaveService _save;
+        private readonly ChekListListService _list;
+        private readonly CheckListDeleteService _delete;
 
-        public AppointmentsController(ILogger<AppointmentsController> logger, ContextEntity context)
+        public ChecklistController(ILogger<ChecklistController> logger, ContextEntity context)
         {
             _logger = logger;
-            _context =  new AppointmentRepositoryEntity(context);
-            _contextClient = new ClientRepositoryEntity(context);
-            _contextOperator = new OperatorRepositoryEntity(context);
-            _contextCar = new CarRepositoryEntity(context);
-            _save = new AppointmentSaveService(_context, _contextCar, _contextClient, _contextOperator);
-            _list = new AppointmentListService(_context);
-            _delete = new AppointmentDeleteService(_context);
+            _context =  new ChecklistRepositoryEntity(context);
+            _contextAppointment = new AppointmentRepositoryEntity(context);
+            _save = new CheckListSaveService(_contextAppointment);
+            _list = new ChekListListService(_context);
+            _delete = new CheckListDeleteService(_context);
         }
 
         [HttpGet]
-        [Route("/appointments")]
+        [Route("/appointments/checklist")]
         [AllowAnonymous]
-        public async Task<List<Appointment>> Get ()
+        public async Task<List<CheckList>> Get ()
         {
             return await this._list.Execute();
         }
 
         [HttpPost]
-        [Route("/appointments")]
+        [Route("/appointments/checklist/{idAppointment}")]
         [AllowAnonymous]
-        public async Task<IActionResult> Create([FromBody] AppointmentCreateView appointmentBody)
+        public async Task<IActionResult> Create([FromBody] CheckListSave checklistBody, int idAppointment)
         {
             try
             {
-                await _save.Execute(EntityBuilder.Call<Appointment>(appointmentBody));                
+                var cheklist = EntityBuilder.Call<CheckList>(checklistBody);
+                await _save.Execute(cheklist, idAppointment, checklistBody.DateTimeDelivery );                
                 return StatusCode(201);
             }
             catch(NotFoundRegisterException err)
@@ -91,14 +85,15 @@ namespace api.Controllers
         }
 
         [HttpPut]
-        [Route("/appointments/{id}")]
+        [Route("/appointments/checklist/{idAppointment}/{id}")]
         [AllowAnonymous]
-        public async Task<IActionResult> Update([FromBody]AppointmentUpdateView appointmentBody, int id)
+        public async Task<IActionResult> Update([FromBody] CheckListSave checklistBody, int idAppointment, int id)
         {
             try
-            {   var appointment = EntityBuilder.Call<Appointment>(appointmentBody);
-                appointment.Id = id;             
-                await _save.Execute(appointment);
+            {
+                var checkList = EntityBuilder.Call<CheckList>(checklistBody);
+                checkList.Id = id;                
+                await _save.Execute(checkList, idAppointment, checklistBody.DateTimeDelivery);
                 return StatusCode(204);
             }
             catch(NotFoundRegisterException err)
@@ -108,18 +103,13 @@ namespace api.Controllers
                 });
             }catch(DateTimeColectedInvalidException err)
             {
-                return StatusCode(401, new {
-                    Message = err.Message
-                });
-            }catch(ValuesInvalidException err)
-            {
-                return StatusCode(401, new {
+                 return StatusCode(401, new {
                     Message = err.Message
                 });
             }
         }
         [HttpDelete]
-        [Route("/appointments/{id}")]
+        [Route("/appointments/checklist/{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> Delete(int id)
         {
@@ -128,16 +118,13 @@ namespace api.Controllers
                 await _delete.Execute(id);
                 return StatusCode(204);
             }
-            catch(UserNotFound err)
+            catch(NotFoundRegisterException err)
             {
                 return StatusCode(404, new {
                     Message = err.Message
                 });
             }
         }
-
-        
-
         
     }
 }

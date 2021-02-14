@@ -6,10 +6,10 @@ namespace ViewModel.Appointments
     public record AppointmentUpdateView
     {
         [Required]
-        public int Id { get; set; }
+        public DateTime DateTimeExpectedCollected { get; set; }
 
         [Required]
-        public DateTime DateTimeExpectedCollected { get; set; }
+        public DateTime DateTimeCollected { get; set; }
 
         [Required]
         public DateTime DateTimeExpectedDelivery { get; set; }

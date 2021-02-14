@@ -8,9 +8,11 @@ namespace ViewModel.Appointments
 
         [Required]
         public DateTime DateTimeExpectedCollected { get; set; }
+        
+        public DateTime DateTimeCollected { get; set; }
 
         [Required]
-        public DateTime DateTimeExpectedDelivery { get; set; }
+        public DateTime DateTimeExpectedDelivery { get; set; }        
 
         [Required]
         public Double HourPrice { get; set; }
