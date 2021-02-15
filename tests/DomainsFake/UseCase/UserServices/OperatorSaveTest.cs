@@ -9,28 +9,28 @@ using NUnit.Framework;
 
 namespace DomainsFake.UseCase.UserServices
 {
-    public class UserSaveTest
+    public class OperatorSaveTest
     {        
-        private UserSaveService _service;
-        private FakeUserRepository _repository;
+        private OperatorSaveService _service;
+        private FakeOperatorRepository _repository;
 
         [SetUp]
         public void Setup()
         {
-            this._repository = new FakeUserRepository();
-            this._service = new UserSaveService(_repository);
+            this._repository = new FakeOperatorRepository();
+            this._service = new OperatorSaveService(_repository);
         }
 
         
         [Test]
         public async Task AddUserSucess()
         {
-            var user = new User()
+            var user = new Operator()
             {
                 Id = 0,
                 Name = "user-test",
-                Birthay = new DateTime(2020,05,01),
-                Registration= "test-registration"
+                Registration= "test-registration",
+                Password = "123456"
             };
             Exception exception = null;
             try
@@ -48,31 +48,12 @@ namespace DomainsFake.UseCase.UserServices
         [Test]
         public async Task TestUserPerson()
         {
-            var user = new User()
+            var user = new Operator()
             {
-                Id = 123,
+                Id = 0,
                 Name = "user-test",
-                Birthay = new DateTime(2020,05,01),
-                Cpf = "13122785609"
-            };
-
-            await this._repository.Add(user);
-
-            await this._service.Execute(user);
-            var userRegister = await this._repository.GetAll();
-
-            Assert.AreEqual(userRegister[0].Cpf, "13122785609");
-            Assert.AreEqual(userRegister[0].UserRole, UserRole.Person);
-        }
-
-        [Test]
-        public async Task TestUserOperator()
-        {
-            var user = new User()
-            {
-                Id = 123,
-                Name = "user-test",
-                Registration = "test-registration"
+                Registration= "test-registration",
+                Password = "123456"
             };
 
             await this._repository.Add(user);
@@ -82,40 +63,25 @@ namespace DomainsFake.UseCase.UserServices
 
             Assert.AreEqual(userRegister[0].Registration, "test-registration");
             Assert.AreEqual(userRegister[0].UserRole, UserRole.Operator);
-        }
+        }       
 
         [Test]
         public async Task NotRegisterUserAlreadyExists()
         {
-            var user = new User()
+            var user = new Operator()
             {
                 Id = 0,
                 Name = "user-test",
-                Registration = "test-registration"
+                Registration= "test-registration",
+                Password = "123456"
             };
-
-            var userCpf = new User()
-            {
-                Id = 0,
-                Name = "user-test",
-                Cpf = "test-cpf"
-            };
-
-            await this._repository.Add(
-                new User()
-                    {
-                        Id = 123,
-                        Name = "user-test",
-                        Registration = "test-registration"
-                    }
-            );
+            await this._repository.Add(user);     
+            user.Id = 1;      
 
             Exception exception = null;
 
             try{
                 await this._service.Execute(user);
-                await this._service.Execute(userCpf);
-
             }catch(UniqUserRegisterCpf ex)
             {
                 exception = ex;
@@ -125,9 +91,9 @@ namespace DomainsFake.UseCase.UserServices
         }
 
         [Test]
-        public async Task NotRegisterUserAlreadyRegisterAndCpf()
+        public async Task NotRegisterUserAlreadyRegister()
         {
-            var user = new User()
+            var user = new Operator()
             {
                 Id = 0,
                 Name = "user-test",

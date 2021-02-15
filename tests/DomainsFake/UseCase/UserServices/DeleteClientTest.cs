@@ -8,27 +8,27 @@ using Domains.UseCase.UserServices.Exceptions;
 
 namespace DomainsFake.UseCase.UserServices
 {
-    public class DeleteUserTest
+    public class DeleteClientTest
     {
-        private UserDeleteService _service;
-        private FakeUserRepository _repository;
+        private ClientDeleteService _service;
+        private FakeClientRepository _repository;
 
         [SetUp]
         public void Setup()
         {
-            this._repository = new FakeUserRepository();
-            this._service = new UserDeleteService(_repository);
+            this._repository = new FakeClientRepository();
+            this._service = new ClientDeleteService(_repository);
 
         }
         [Test]
         public async Task DeleteUserSucess()
         {
-            var user = new User()
+            var user = new Client()
             {
                 Id = 123,
                 Name = "user-test",
                 Birthay = new DateTime(2020,05,01),
-                Registration = "123"
+                Cpf = "123"
             };
             await this._repository.Add(user);
             Exception exception = null;
@@ -47,12 +47,12 @@ namespace DomainsFake.UseCase.UserServices
         [Test]
         public async Task NotDeleteUserIdZero()
         {
-            var user = new User()
+            var user = new Client()
             {
                 Id = 0,
                 Name = "user-test",
                 Birthay = new DateTime(2020,05,01),
-                Registration = "123"
+                Cpf = "123"
             };
             Exception exception = null;
             try
@@ -68,12 +68,12 @@ namespace DomainsFake.UseCase.UserServices
         }
         public async Task NotDeleteUserRegisterNot()
         {
-            var user = new User()
+            var user = new Client()
             {
                 Id = 123,
                 Name = "user-test",
                 Birthay = new DateTime(2020,05,01),
-                Registration = "123"
+                Cpf = "123"
             };
             Exception exception = null;
             try

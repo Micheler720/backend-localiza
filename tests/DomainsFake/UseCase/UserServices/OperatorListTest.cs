@@ -6,25 +6,25 @@ using NUnit.Framework;
 
 namespace DomainsFake.UseCase.UserServices
 {
-    public class UserListTest
+    public class OperatorListTest
     {
-        private UserListService _service;
-        private FakeUserRepository _repository;
+        private OperatorListService _service;
+        private FakeOperatorRepository _repository;
 
         [SetUp]
         public void Setup()
         {
-            this._repository = new FakeUserRepository();
-            this._service = new UserListService(_repository);
+            this._repository = new FakeOperatorRepository();
+            this._service = new OperatorListService(_repository);
         }
 
         [Test]
         public async Task ListUserView()
         {
-            await this._repository.Add( new User(){
+            await this._repository.Add( new Operator(){
                 Id = 123,
                 Name = "test-user",
-                Registration="123154", 
+                Registration ="123154", 
                 Password = "123456",               
             });
 

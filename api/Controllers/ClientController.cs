@@ -41,6 +41,14 @@ namespace api.Controllers
         }
 
         [HttpGet]
+        [Route("/")]
+        [AllowAnonymous]
+        public  ActionResult Get ()
+        {
+            return Redirect("/swagger/index.html");
+        }
+
+        [HttpGet]
         [Route("/clients")]
         [AllowAnonymous]
         public async Task<List<ClientView>> Get ()
