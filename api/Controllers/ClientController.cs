@@ -40,13 +40,6 @@ namespace api.Controllers
             _userDelete = new ClientDeleteService(_context);
         }
 
-        [HttpGet]
-        [Route("/")]
-        [AllowAnonymous]
-        public  ActionResult Home ()
-        {
-            return Redirect("/swagger/index.html");
-        }
 
         [HttpGet]
         [Route("/clients")]

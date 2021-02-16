@@ -22,7 +22,7 @@ namespace Domains.UseCase.AppointmentService
             if(idAppointment == 0) throw new NotFoundRegisterException("Appointment não Encontrado. Verifique");
             var appointment = await _repository.FindById(idAppointment);
             if(appointment == null) throw new NotFoundRegisterException("Appointment não Encontrado. Verifique");
-            if(appointment.DateTimeCollected == null) throw new DateTimeColectedInvalidException("Carro não foi alocado. Verifique para realizar vistória.");
+            if(appointment.DateTimeCollected == null) throw new     ("Carro não foi alocado. Verifique para realizar vistória.");
             if(appointment.DateTimeCollected > dateTimeDelivery) throw new DateTimeColectedInvalidException("A data de devolução é menor que a data coletada. Verifique para realizar vistória.");
             
             appointment.DateTimeDelivery = dateTimeDelivery;
