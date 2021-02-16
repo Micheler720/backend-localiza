@@ -28,7 +28,7 @@ namespace Infra.Database.Fake
         {
             await Task.Delay(2000);
             return this._data
-                        .Where(data => registration != data.Registration && data.Password == password)
+                        .Where(data => registration == data.Registration && data.Password == password)
                         .FirstOrDefault();
         }
 

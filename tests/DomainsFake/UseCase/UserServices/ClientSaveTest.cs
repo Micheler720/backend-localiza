@@ -65,35 +65,7 @@ namespace DomainsFake.UseCase.UserServices
             Assert.AreEqual(userRegister[0].UserRole, UserRole.Person);
         }        
 
-        [Test]
-        public async Task NotRegisterUserAlreadyExists()
-        {
-            var user = new Client()
-            {
-                Id = 0,
-                Name = "user-test",
-                Cpf = "test-registration"
-            };
-
-            Console.WriteLine(user.Cpf);
-            Console.WriteLine(user.Id);
-
-            await this._repository.Add(user);    
-            user.Id = 55;      
-            Console.WriteLine(user.Cpf);
-            Console.WriteLine(user.Id);
-
-            Exception exception = null;
-            try
-            {
-                await this._service.Execute(user);
-            }catch(Exception ex)
-            {
-                exception = ex;
-            }
-
-            Assert.AreNotEqual(exception, null);
-        }
+       
 
         [Test]
         public async Task NotRegisterUserAlreadyCpf()

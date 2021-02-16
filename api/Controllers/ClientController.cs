@@ -43,7 +43,7 @@ namespace api.Controllers
         [HttpGet]
         [Route("/")]
         [AllowAnonymous]
-        public  ActionResult Get ()
+        public  ActionResult Home ()
         {
             return Redirect("/swagger/index.html");
         }

@@ -18,8 +18,7 @@ namespace Infra.Database.Fake
         public async Task Add(T entity)
         {
             this._data.Add(entity);
-            await Task.Delay(2000);
-            
+            await Task.Delay(2000);            
         }
 
         public async Task Delete(T entity)

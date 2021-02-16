@@ -21,7 +21,7 @@ namespace Domains.UseCase.UserServices
                 "CPF de cliente não foi definido."
                 );
 
-            IUser userExist;
+                IUser userExist;
 
                 client.UserRole = UserRole.Person;
                 userExist = await _repository.FindByPersonRegisterNot(client);

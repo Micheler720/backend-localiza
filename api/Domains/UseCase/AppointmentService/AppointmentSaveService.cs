@@ -42,20 +42,20 @@ namespace Domains.UseCase.AppointmentService
                 
             var op = await _repositoryOperator.FindById(appointment.IdOperator);
             if(op == null) throw new NotFoundRegisterException("Operador não encontrado, verifique informações.");
-
-
+            
+            
+            if(appointment.DateTimeExpectedCollected > appointment.DateTimeExpectedDelivery) throw new DateTimeColectedInvalidException("Data esperada da coleta maior que a data esperada para entrega. Verifique.");
+                
+            
+            
             if(appointment.Id == 0)
             {
-                if(appointment.DateTimeExpectedCollected > appointment.DateTimeCollected) throw new DateTimeColectedInvalidException("Data da coleta maior que a data esperada para coleta verifique.");
-                
-                if(appointment.DateTimeExpectedCollected > appointment.DateTimeExpectedDelivery) throw new DateTimeColectedInvalidException("Data esperada da coleta maior que a data esperada para entrega. Verifique.");
-                
                 if(appointment.DateTimeExpectedCollected < DateTime.Now) throw new DateTimeColectedInvalidException("Data esperada da coleta menor que data atual. Verifique!");   
 
                 var avalabilityCar = await _repository.CheckAvailabilityCar(appointment.IdCar, appointment.DateTimeExpectedCollected);
                 if(!avalabilityCar ) throw new CarNotAvalabityException("Carro já está alocado.");
                 
-                var avalabilityClient = await _repository.CheckAvailabilityCar(appointment.IdCar, appointment.DateTimeExpectedCollected);
+                var avalabilityClient = await _repository.CheckAvailabilityClient(appointment.IdClient, appointment.DateTimeExpectedCollected);
                 if(!avalabilityClient) throw new ClientNotAvalabityException("Cliente já possui um agendamento para está data.");
                
 

@@ -28,7 +28,7 @@ namespace Infra.Database.Implementations.EntityFramework.Repositories.Appointmen
         {
             var query = from a in _context.Appointments
                 where  idCar == a.IdCar && a.DateTimeCollected == null
-                && a.DateTimeExpectedDelivery > DateTimeExpectedCollected
+                && a.DateTimeExpectedDelivery < DateTimeExpectedCollected
                 select a;
             return await query.FirstOrDefaultAsync<Appointment>() == null;
         }
@@ -37,7 +37,7 @@ namespace Infra.Database.Implementations.EntityFramework.Repositories.Appointmen
         {
             var query = from a in _context.Appointments
                 where  idClient == a.IdClient && a.DateTimeCollected == null
-                && a.DateTimeExpectedDelivery > DateTimeExpectedCollected
+                && a.DateTimeExpectedDelivery < DateTimeExpectedCollected
                 select a;
             return await query.FirstOrDefaultAsync<Appointment>() == null;
         }

@@ -65,31 +65,7 @@ namespace DomainsFake.UseCase.UserServices
             Assert.AreEqual(userRegister[0].UserRole, UserRole.Operator);
         }       
 
-        [Test]
-        public async Task NotRegisterUserAlreadyExists()
-        {
-            var user = new Operator()
-            {
-                Id = 0,
-                Name = "user-test",
-                Registration= "test-registration",
-                Password = "123456"
-            };
-            await this._repository.Add(user);     
-            user.Id = 1;      
-
-            Exception exception = null;
-
-            try{
-                await this._service.Execute(user);
-            }catch(UniqUserRegisterCpf ex)
-            {
-                exception = ex;
-            }
-
-            Assert.AreNotEqual(exception, null);
-        }
-
+        
         [Test]
         public async Task NotRegisterUserAlreadyRegister()
         {
